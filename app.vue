@@ -19,22 +19,22 @@
           <div
             class="bg-yellow-200 flex items-center px-4 py-2 rounded-lg w-fit"
           >
-            너 어디냐?
+            반가워요!
           </div>
           <div
             class="bg-yellow-200 flex items-center px-4 py-2 rounded-lg w-fit"
           >
-            왜 연락을 안해
+            뭔가 말씀을 해주세요.
           </div>
         </div>
       </div>
       <div class="flex flex-row-reverse gap-4">
         <div class="flex flex-col items-end gap-3 mt-1.5">
           <div class="bg-white flex items-center px-4 py-2 rounded-lg w-fit">
-            무슨 연락
+            안녕하세요.
           </div>
           <div class="bg-white flex items-center px-4 py-2 rounded-lg w-fit">
-            언제했는데?
+            아래 입력창을 통해 새로운 말풍선을 추가할 수 있군요!
           </div>
         </div>
       </div>
