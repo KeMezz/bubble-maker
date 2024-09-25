@@ -10,7 +10,6 @@
   TODO3:  구성원 추가하는 별도 페이지 만들기, 구성원 추가시 프로필사진도 설정할 수 있게 하기
 -->
 <template>
-  {{ users }}
   <form action="">
     <div class="bg-sky-200 p-4 h-[80vh] overflow-y-scroll">
       <div class="flex gap-4">
@@ -67,7 +66,6 @@
 // TODO: 최종적으로 스크린샷 생성하는 매커니즘은 어떻게 만들건지? dom-to-image? html-to-image?
 
 import SelectPersonButton from "~/components/select-person-button.vue";
-import prisma from "~/lib/prisma";
 
 const { data: users } = await useAsyncData("users", async () =>
   $fetch("/api/users")
