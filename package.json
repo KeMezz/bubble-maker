@@ -14,10 +14,11 @@
     "@prisma/nuxt": "^0.0.35",
     "@tailwindcss/forms": "^0.5.9",
     "nuxt": "^3.13.0",
+    "prisma": "^5.20.0",
     "vue": "latest"
   },
   "devDependencies": {
-    "@prisma/client": "^5.19.1",
+    "@prisma/client": "^5.20.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.45",
     "tailwindcss": "^3.4.10"
