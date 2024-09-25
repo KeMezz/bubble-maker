@@ -43,7 +43,7 @@ model Message {
 
 model Token {
   id        Int      @id @default(autoincrement())
-  token     String   @unique
+  token     Int      @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
