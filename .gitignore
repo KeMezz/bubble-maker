@@ -26,3 +26,4 @@ logs
 # database
 *.db
 *.db-journal
+/prisma/migrations

@@ -10,4 +10,8 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  runtimeConfig: {
+    mailId: process.env.MAIL_ID,
+    mailPw: process.env.MAIL_PW,
+  },
 });
