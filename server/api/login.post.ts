@@ -1,71 +1,55 @@
-import nodemailerClient from "~/lib/email";
 import prisma from "~/lib/prisma";
 
-async function createToken() {
-  const token = Math.floor(100000 + Math.random() * 900000);
-  const tokenExists = await prisma.token.findUnique({
+export interface PostLoginResponse {
+  ok: boolean;
+}
+
+async function getUserId(email: string) {
+  const user = await prisma.user.findUnique({
     select: {
       id: true,
     },
     where: {
-      token,
+      email,
     },
   });
 
-  if (tokenExists) {
-    createToken();
-  } else {
-    return token;
-  }
+  return user?.id;
 }
 
-async function sendEmail(email: string, token: number) {
-  const mailOptions = {
-    from: process.env.MAIL_ID,
-    to: email,
-    subject: "[인증 코드] 버블 메이커 6자리 인증 코드를 보내드려요",
-    text: `인증 코드: ${token}`,
-  };
-
-  await new Promise(() => {
-    nodemailerClient.sendMail(mailOptions, (error, response) => {
-      if (error) {
-        return;
-      }
-    });
+async function validateToken(token: string, userId: number) {
+  const serverToken = await prisma.token.findUnique({
+    where: {
+      userId,
+      token: +token,
+    },
   });
+  if (!serverToken) {
+    return false;
+  }
+
+  await prisma.token.deleteMany({
+    where: {
+      userId,
+    },
+  });
+  return true;
 }
 
 export default defineEventHandler(async (event) => {
-  const { email } = await readBody(event);
-  console.log("email", email);
-  const token = await createToken();
-  const mailOptions = {
-    from: process.env.MAIL_ID,
-    to: email,
-    subject: "[인증 코드] 버블 메이커 6자리 인증 코드를 보내드려요",
-    text: `인증 코드: ${token}`,
-  };
+  const { email, token } = await readBody(event);
 
-  await new Promise(() => {
-    nodemailerClient.sendMail(mailOptions, (error, response) => {
-      if (error) {
-        throw createError({
-          statusCode: 500,
-          statusMessage: error.message,
-        });
-      } else {
-        return {
-          ok: true,
-          ...response,
-        };
-      }
+  const userId = await getUserId(email);
+  if (!userId) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: "User not found",
     });
-  });
+  }
 
-  nodemailerClient.close();
+  const tokenMatch = await validateToken(token, userId);
 
   return {
-    ok: true,
+    ok: tokenMatch,
   };
 });
