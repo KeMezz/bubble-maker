@@ -1,4 +1,5 @@
 import prisma from "~/lib/prisma";
+import { SESSION_NAME } from "~/constants/session-const";
 
 export interface PostLoginResponse {
   ok: boolean;
@@ -48,8 +49,14 @@ export default defineEventHandler(async (event) => {
   }
 
   const tokenMatch = await validateToken(token, userId);
+  if (!tokenMatch) {
+    return {
+      ok: false,
+    };
+  }
 
+  setCookie(event, SESSION_NAME, JSON.stringify({ id: userId, email }));
   return {
-    ok: tokenMatch,
+    ok: true,
   };
 });

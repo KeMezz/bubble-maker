@@ -18,7 +18,8 @@
         />
         <button
           v-if="!showToken"
-          class="px-6 py-2 bg-orange-400 text-white rounded-lg w-fit self-center text-sm hover:bg-orange-600 transition-colors"
+          :disabled="isLoading"
+          class="px-6 py-2 bg-orange-400 text-white rounded-lg w-fit self-center text-sm hover:bg-orange-600 transition-colors disabled:bg-neutral-200"
         >
           인증번호 받기
         </button>
@@ -38,7 +39,8 @@
         />
         <button
           v-if="showToken"
-          class="px-6 py-2 bg-orange-400 text-white rounded-lg w-fit self-center text-sm hover:bg-orange-600 transition-colors"
+          :disabled="isLoading"
+          class="px-6 py-2 bg-orange-400 text-white rounded-lg w-fit self-center text-sm hover:bg-orange-600 transition-colors disabled:bg-neutral-200"
         >
           로그인
         </button>
@@ -55,13 +57,18 @@ const router = useRouter();
 
 const email = ref("");
 const token = ref("");
+const isLoading = ref(false);
 const showToken = ref(false);
 
 async function getToken() {
+  isLoading.value = true;
+
   const response = await $fetch<GetTokenResponse>("/api/token", {
     method: "GET",
     params: { email: email.value },
   });
+
+  isLoading.value = false;
 
   if (response.ok) {
     showToken.value = true;

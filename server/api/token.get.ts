@@ -6,6 +6,14 @@ export interface GetTokenResponse {
   message: string;
 }
 
+async function deleteToken(userId: number) {
+  await prisma.token.deleteMany({
+    where: {
+      userId,
+    },
+  });
+}
+
 async function createToken(userId: number) {
   const token = Math.floor(100000 + Math.random() * 900000);
   const tokenExists = await prisma.token.findUnique({
@@ -39,6 +47,7 @@ async function getUserId(email: string) {
     },
   });
   if (user) {
+    await deleteToken(user.id);
     return user.id;
   }
 
