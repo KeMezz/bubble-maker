@@ -10,18 +10,10 @@
   </button>
 </template>
 
-<script lang="ts">
-export default {
-  name: "SelectPersonButton",
-  props: {
-    text: {
-      type: String,
-      required: true,
-    },
-    isActive: {
-      type: Boolean,
-      default: false,
-    },
-  },
-};
+<script setup lang="ts">
+interface PropTypes {
+  text: string;
+  isActive: boolean;
+}
+const { text, isActive } = defineProps<PropTypes>();
 </script>
