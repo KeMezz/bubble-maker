@@ -6,11 +6,21 @@
   >
     로그아웃
   </button>
+  <div class="p-4">
+    <ul class="flex flex-col gap-3">
+      <IndexListChat
+        v-for="chat in chats"
+        :key="chat.id"
+        :id="chat.id"
+        :title="chat.title"
+        :description="chat.description"
+      />
+    </ul>
+  </div>
 </template>
 
 <script setup lang="ts">
 import type { PostLogoutResponse } from "~/server/api/logout.post";
-
 const router = useRouter();
 
 async function logout() {
@@ -22,4 +32,6 @@ async function logout() {
     router.push({ path: "/login" });
   }
 }
+
+const { chats } = await $fetch<GetChatsResponse>("/api/chats");
 </script>
