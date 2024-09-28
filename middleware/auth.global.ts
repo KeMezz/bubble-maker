@@ -1,21 +1,19 @@
 import { defineNuxtRouteMiddleware } from "nuxt/app";
-import { parseCookies } from "h3";
+import { useSession } from "h3";
 import { useNuxtApp } from "#app";
-import { SESSION_NAME } from "~/constants/session-const";
+import { USE_SESSION_CONFIG } from "~/constants/session-const";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const { ssrContext } = useNuxtApp();
 
   if (ssrContext) {
     const event = useRequestEvent();
-    const cookies = parseCookies(event!);
-    const session = cookies[SESSION_NAME];
+    const { data } = await useSession(event!, USE_SESSION_CONFIG);
 
-    if (!session && to.path !== "/login") {
+    if (!data?.userId && to.path !== "/login") {
       return navigateTo("/login");
     }
-
-    if (session && to.path === "/login") {
+    if (data?.userId && to.path === "/login") {
       return navigateTo("/");
     }
   }
