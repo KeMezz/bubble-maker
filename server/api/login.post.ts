@@ -1,5 +1,5 @@
 import prisma from "~/lib/prisma";
-import { SESSION_NAME } from "~/constants/session-const";
+import { USE_SESSION_CONFIG } from "~/constants/session-const";
 
 export interface PostLoginResponse {
   ok: boolean;
@@ -55,7 +55,9 @@ export default defineEventHandler(async (event) => {
     };
   }
 
-  setCookie(event, SESSION_NAME, JSON.stringify({ id: userId, email }));
+  const session = await useSession(event, USE_SESSION_CONFIG);
+  await session.update({ userId, email });
+
   return {
     ok: true,
   };

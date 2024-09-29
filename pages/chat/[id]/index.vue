@@ -43,8 +43,8 @@
       <div
         class="self-center mt-4 px-4 py-2 flex gap-2 bg-neutral-100 w-fit rounded-lg"
       >
-        <SelectPersonButton :isActive="true" text="나" />
-        <SelectPersonButton :isActive="false" text="상대방" />
+        <ChatButtonSelectPerson :isActive="true" text="나" />
+        <ChatButtonSelectPerson :isActive="false" text="상대방" />
       </div>
       <div class="flex gap-4 p-4">
         <input
@@ -64,12 +64,4 @@
 
 <script setup lang="ts">
 // TODO: 최종적으로 스크린샷 생성하는 매커니즘은 어떻게 만들건지? dom-to-image? html-to-image?
-
-import SelectPersonButton from "~/components/select-person-button.vue";
-
-const { data: users } = await useAsyncData("users", async () =>
-  $fetch("/api/users")
-);
-
-console.log(users);
 </script>
