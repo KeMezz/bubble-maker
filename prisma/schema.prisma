@@ -15,8 +15,8 @@ model User {
   email    String    @unique
   name     String?
   chats    Chat[]
-  messages Message[]
   tokens   Token[]
+  messages Message[]
 }
 
 model Chat {
@@ -31,14 +31,15 @@ model Chat {
 }
 
 model Message {
-  id        Int      @id @default(autoincrement())
-  text      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  chat      Chat     @relation(fields: [chatId], references: [id])
-  chatId    Int
-  sender    User     @relation(fields: [userId], references: [id])
-  userId    Int
+  id         Int      @id @default(autoincrement())
+  text       String
+  senderType Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  chat       Chat     @relation(fields: [chatId], references: [id])
+  chatId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int
 }
 
 model Token {
