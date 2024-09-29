@@ -64,10 +64,4 @@
 
 <script setup lang="ts">
 // TODO: 최종적으로 스크린샷 생성하는 매커니즘은 어떻게 만들건지? dom-to-image? html-to-image?
-
-const { data: users } = await useAsyncData("users", async () =>
-  $fetch("/api/users")
-);
-
-console.log(users);
 </script>
