@@ -17,10 +17,10 @@
 <script setup lang="ts">
 import { ChevronRightIcon } from "@heroicons/vue/24/solid";
 
-interface PropTypes {
+interface ChatProps {
   id: number;
   title: string;
   description: string;
 }
-const { id, title, description } = defineProps<PropTypes>();
+const { id, title, description } = defineProps<ChatProps>();
 </script>
