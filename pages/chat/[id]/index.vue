@@ -2,7 +2,7 @@
   <div>
     <div
       ref="chatArea"
-      class="bg-sky-200 p-4 min-h-screen overflow-y-scroll mb-56 flex flex-col gap-4"
+      class="bg-sky-200 p-4 min-h-[calc(100vh-224px)] overflow-y-scroll mb-56 flex flex-col gap-4"
     >
       <Message
         v-for="message in messages"

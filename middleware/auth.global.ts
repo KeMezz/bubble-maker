@@ -1,8 +1,7 @@
-import { defineNuxtRouteMiddleware } from "nuxt/app";
-import { useSession } from "h3";
-import { useNuxtApp } from "#app";
-import { USE_SESSION_CONFIG } from "~/constants/session-const";
 import prisma from "~/lib/prisma";
+import { defineNuxtRouteMiddleware } from "nuxt/app";
+import { useNuxtApp } from "#app";
+import { withUseSession } from "~/lib/withSession";
 
 async function validateUser(userId: number) {
   if (!userId) return false;
@@ -24,13 +23,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
   if (ssrContext) {
     const event = useRequestEvent();
-    const session = await useSession(event!, USE_SESSION_CONFIG);
-
+    const session = await withUseSession(event!);
     const isUserValid = await validateUser(+session.data?.userId);
 
     if (!isUserValid && to.path !== "/login") {
       await session.clear();
-
       return navigateTo("/login");
     }
     if (isUserValid && to.path === "/login") {

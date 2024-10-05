@@ -1,6 +1,6 @@
 import prisma from "~/lib/prisma";
-import { GET_SESSION_CONFIG } from "~/constants/session-const";
 import { Chat } from "@prisma/client";
+import { withGetSession } from "~/lib/withSession";
 
 export interface GetChatsResponse {
   ok: boolean;
@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
   try {
     const {
       data: { userId },
-    } = await getSession(event, GET_SESSION_CONFIG);
+    } = await withGetSession(event);
 
     const chats = await getChats(userId);
 

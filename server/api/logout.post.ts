@@ -1,4 +1,4 @@
-import { USE_SESSION_CONFIG } from "~/constants/session-const";
+import { withUseSession } from "~/lib/withSession";
 
 export interface PostLogoutResponse {
   ok: boolean;
@@ -6,7 +6,7 @@ export interface PostLogoutResponse {
 
 export default defineEventHandler(async (event) => {
   try {
-    const session = await useSession(event, USE_SESSION_CONFIG);
+    const session = await withUseSession(event);
     await session.clear();
 
     return {
