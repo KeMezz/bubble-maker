@@ -4,7 +4,7 @@
     @click="emit('update:currentSender', senderId)"
     :class="{
       'px-4 py-2 rounded-lg w-24': true,
-      'bg-purple-400 text-white': senderId === currentSender,
+      'bg-rose-400 text-white': senderId === currentSender,
       'text-black': senderId !== currentSender,
     }"
   >
