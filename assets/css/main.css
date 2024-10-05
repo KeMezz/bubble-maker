@@ -1,6 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+  img {
+    @apply inline-block;
+  }
+}
 
 html {
   --tw-bg-opacity: 1;
