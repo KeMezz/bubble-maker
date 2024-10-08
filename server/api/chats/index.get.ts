@@ -4,7 +4,7 @@ import { withGetSession } from "~/lib/withSession";
 
 export interface GetChatsResponse {
   ok: boolean;
-  chats: Chat;
+  chats: Chat[];
 }
 
 async function getChats(userId: number) {
