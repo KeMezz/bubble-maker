@@ -30,6 +30,7 @@ import type { PostLogoutResponse } from "~/server/api/logout.post";
 import type { GetChatsResponse } from "~/server/api/chats/index.get";
 import type { CreateChatResponse } from "~/server/api/chat/index.post";
 import { PlusIcon } from "@heroicons/vue/24/solid";
+
 const router = useRouter();
 
 const { chats } = await $fetch<GetChatsResponse>("/api/chats");

@@ -14,17 +14,17 @@
     <section class="fixed bottom-0 left-0 w-full h-56">
       <button
         @click="takeScreenshot"
-        class="w-full h-14 flex justify-center items-center bg-rose-400 gap-4"
+        class="flex items-center justify-center w-full gap-4 h-14 bg-rose-400"
       >
-        <CameraIcon class="size-8 text-white" />
+        <CameraIcon class="text-white size-8" />
         <span class="text-white">스크린샷 저장하기</span>
       </button>
       <form
         @submit.prevent="addMessage"
-        class="flex flex-col justify-center items-center gap-6 py-6 bg-neutral-100 shadow-xl"
+        class="flex flex-col items-center justify-center gap-6 py-6 shadow-xl bg-neutral-100"
       >
         <div
-          class="self-center px-3 py-2 flex gap-2 bg-neutral-200 w-fit rounded-lg"
+          class="flex self-center gap-2 px-3 py-2 rounded-lg bg-neutral-200 w-fit"
         >
           <ChatButtonSelectPerson
             text="나"
@@ -41,14 +41,14 @@
         </div>
         <div class="flex w-full gap-4 px-4">
           <input
-            class="border-2 px-4 py-2 rounded-lg w-full"
+            class="w-full px-4 py-2 border-2 rounded-lg"
             type="text"
             v-model="text"
             placeholder="메시지를 추가해주세요.."
           />
           <button
             type="submit"
-            class="bg-rose-400 hover:bg-neutral-400 transition-colors px-4 w-20 rounded-lg text-white"
+            class="w-20 px-4 text-white transition-colors rounded-lg bg-rose-400 hover:bg-neutral-400"
           >
             송신
           </button>
@@ -75,7 +75,11 @@ const { data } = await useFetch<GetMessagesResponse>("/api/messages", {
   method: "GET",
   params: { chatId },
 });
-const messages = ref(data?.value?.messages);
+
+if (!data.value?.messages) {
+  navigateTo("/404");
+}
+const messages = ref(data?.value?.messages!);
 
 function setSender(senderId: number) {
   if (senderId) {
@@ -89,7 +93,7 @@ async function addMessage() {
     body: { chatId, sender: sender.value, text: text.value },
   });
 
-  if (ok) {
+  if (ok && message) {
     messages.value = [...messages.value, message];
   }
 
@@ -97,7 +101,6 @@ async function addMessage() {
 }
 
 function takeScreenshot() {
-  console.log(chatArea.value);
   html2canvas(chatArea.value).then((canvas) => {
     const imageUrl = canvas.toDataURL("image/png");
     const link = document.createElement("a");
@@ -124,8 +127,4 @@ watch(
   },
   { deep: true }
 );
-
-onMounted(() => {
-  scrollToBottom();
-});
 </script>

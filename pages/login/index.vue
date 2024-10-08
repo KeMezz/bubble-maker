@@ -1,8 +1,6 @@
 <template>
   <section class="flex flex-col justify-center h-screen">
-    <div
-      class="flex flex-col bg-neutral-100 p-6 m-12 rounded-lg gap-4 shadow-sm"
-    >
+    <div class="flex flex-col bg-white p-6 m-12 rounded-lg gap-4 shadow-sm">
       <h1 class="text-2xl font-bold pb-4">로그인</h1>
       <form
         @submit.prevent="getToken"

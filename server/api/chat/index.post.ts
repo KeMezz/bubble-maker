@@ -6,7 +6,7 @@ export interface CreateChatResponse {
   chatId: number;
 }
 
-async function createChat(userId: number) {
+async function createChat(userId: number): Promise<{ id: number }> {
   const chat = await prisma.chat.create({
     data: {
       title: "새로운 챗",
@@ -28,8 +28,6 @@ export default defineEventHandler(async (event) => {
     } = await withGetSession(event);
 
     const chat = await createChat(userId);
-
-    console.log("chat", chat);
 
     return {
       ok: true,
